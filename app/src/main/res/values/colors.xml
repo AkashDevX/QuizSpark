@@ -2,4 +2,22 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    
+    <!-- Blue Theme Colors -->
+    <color name="primary_blue">#2196F3</color>
+    <color name="primary_blue_dark">#1976D2</color>
+    <color name="primary_blue_light">#64B5F6</color>
+    <color name="background_blue">#E3F2FD</color>
+    <color name="background_blue_dark">#BBDEFB</color>
+    
+    <!-- Tile Colors -->
+    <color name="tile_history">#4CAF50</color>
+    <color name="tile_maths">#FF9800</color>
+    <color name="tile_celebrity">#9C27B0</color>
+    <color name="tile_about">#00BCD4</color>
+    <color name="wrong_answer">#F44336</color>
+    
+    <!-- Text Colors -->
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#212121</color>
 </resources>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_blue"
+    tools:context=".HistoryQuiz.HistoryQuizActivity">
+
+    <!-- Score Display Card -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardScore"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="32dp"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="16dp"
+        app:cardBackgroundColor="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tvMessage">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="32dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Your Score"
+                android:textColor="@color/text_secondary"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="16dp" />
+
+            <TextView
+                android:id="@+id/tvFinalScore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0/10"
+                android:textColor="@color/primary_blue_dark"
+                android:textSize="48sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Success Message -->
+    <TextView
+        android:id="@+id/tvMessage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="24dp"
+        android:text="Well Done!"
+        android:textColor="@color/primary_blue_dark"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/cardScore"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Great Knowledge Message (for high scores) -->
+    <TextView
+        android:id="@+id/tvGreatKnowledge"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="Great Knowledge You Have!"
+        android:textColor="@color/tile_history"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/tvMessage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Celebration Icon/Emoji Area -->
+    <LinearLayout
+        android:id="@+id/llCelebration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/tvGreatKnowledge"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/tvEmoji1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🎉"
+            android:textSize="40sp"
+            android:layout_margin="8dp" />
+
+        <TextView
+            android:id="@+id/tvEmoji2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="⭐"
+            android:textSize="40sp"
+            android:layout_margin="8dp" />
+
+        <TextView
+            android:id="@+id/tvEmoji3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🏆"
+            android:textSize="40sp"
+            android:layout_margin="8dp" />
+    </LinearLayout>
+
+    <!-- Back to Main Screen Button -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardBackButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="24dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:visibility="invisible"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="8dp"
+        app:cardBackgroundColor="@color/primary_blue_dark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Back to Main Screen"
+            android:textColor="@color/text_primary"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:padding="20dp" />
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
