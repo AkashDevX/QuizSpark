@@ -165,7 +165,7 @@ public class CelebrityQuestionsActivity extends AppCompatActivity {
                 "Freddie Mercury",
                 "David Bowie",
                 2,
-                null // Image not available - add manually to assets folder
+                "celebrity_images/micheal_jackson_.jpg"
         ));
         
         questionList.add(new CelebrityQuestion(
@@ -175,7 +175,7 @@ public class CelebrityQuestionsActivity extends AppCompatActivity {
                 "Michelle Obama",
                 "Serena Williams",
                 1,
-                null // Image not available - add manually to assets folder
+                "celebrity_images/oprah_winfrey_.jpg"
         ));
         
         questionList.add(new CelebrityQuestion(
@@ -185,7 +185,8 @@ public class CelebrityQuestionsActivity extends AppCompatActivity {
                 "LeBron James",
                 "Serena Williams",
                 3,
-                null // Image not available - add manually to assets folder
+                "celebrity_images/lebron_james_.jpg"
+
         ));
 
         // Shuffle questions for variety
