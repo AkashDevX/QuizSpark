@@ -12,7 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.QuizSpark">
         <activity
+            android:name=".CelebrityQuiz.CelebrityQuestionsActivity"
+            android:exported="false" />
+        <activity
             android:name=".HistoryQuiz.HistoryQuizActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HistoryQuiz.QuizResultActivity"
             android:exported="false" />
         <activity
             android:name=".MainScreen.MainScreenActivity"

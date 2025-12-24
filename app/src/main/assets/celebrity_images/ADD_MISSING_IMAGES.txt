@@ -1,0 +1,33 @@
+MISSING CELEBRITY IMAGES
+========================
+
+The following images need to be manually added to this folder:
+
+1. michael_jackson.jpg
+2. oprah_winfrey.jpg  
+3. lebron_james.jpg
+
+HOW TO ADD IMAGES:
+==================
+
+Option 1: Download from the internet
+- Search for free celebrity images on sites like:
+  * Unsplash (unsplash.com)
+  * Pexels (pexels.com)
+  * Pixabay (pixabay.com)
+- Download images in JPG or PNG format
+- Save them with the exact filenames listed above
+- Place them in this folder: app/src/main/assets/celebrity_images/
+
+Option 2: Use the download script
+- Run: powershell -ExecutionPolicy Bypass -File download_celebrity_images.ps1
+- The script will attempt to download missing images
+
+CURRENTLY AVAILABLE IMAGES:
+===========================
+✓ tom_hanks.jpg
+✓ robert_downey_jr.jpg
+✓ beyonce.jpg
+
+After adding images, rebuild the app in Android Studio.
+

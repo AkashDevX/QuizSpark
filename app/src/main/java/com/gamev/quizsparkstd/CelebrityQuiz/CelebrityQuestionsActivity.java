@@ -1,8 +1,14 @@
-package com.gamev.quizsparkstd.HistoryQuiz;
+package com.gamev.quizsparkstd.CelebrityQuiz;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -12,20 +18,25 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.gamev.quizsparkstd.QuestionModels.Question;
+import com.gamev.quizsparkstd.HistoryQuiz.QuizResultActivity;
+import com.gamev.quizsparkstd.QuestionModels.CelebrityQuestion;
 import com.gamev.quizsparkstd.R;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class HistoryQuizActivity extends AppCompatActivity {
+public class CelebrityQuestionsActivity extends AppCompatActivity {
 
     private TextView tvHeader, tvScore, tvTimeLeft, tvQuestion;
     private TextView tvAnswer1, tvAnswer2, tvAnswer3, tvAnswer4;
+    private ImageView ivCelebrity;
+    private CardView cardCelebrityImage;
     private CardView cardAnswer1, cardAnswer2, cardAnswer3, cardAnswer4;
 
-    private List<Question> questionList;
+    private List<CelebrityQuestion> questionList;
     private int currentQuestionIndex = 0;
     private int score = 0;
     private CountDownTimer timer;
@@ -36,7 +47,7 @@ public class HistoryQuizActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_history_quiz);
+        setContentView(R.layout.activity_celebrity_questions);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -54,6 +65,8 @@ public class HistoryQuizActivity extends AppCompatActivity {
         tvScore = findViewById(R.id.tvScore);
         tvTimeLeft = findViewById(R.id.tvTimeLeft);
         tvQuestion = findViewById(R.id.tvQuestion);
+        ivCelebrity = findViewById(R.id.ivCelebrity);
+        cardCelebrityImage = findViewById(R.id.cardCelebrityImage);
         tvAnswer1 = findViewById(R.id.tvAnswer1);
         tvAnswer2 = findViewById(R.id.tvAnswer2);
         tvAnswer3 = findViewById(R.id.tvAnswer3);
@@ -73,95 +86,106 @@ public class HistoryQuizActivity extends AppCompatActivity {
     private void initializeQuestions() {
         questionList = new ArrayList<>();
         
-        // Add History Quiz Questions
-        questionList.add(new Question(
-                "In which year did World War II end?",
-                "1943",
-                "1944",
-                "1945",
-                "1946",
-                3
+        // Questions with images - using assets folder (real celebrity images)
+        questionList.add(new CelebrityQuestion(
+                "Who is this celebrity?",
+                "Tom Hanks",
+                "Brad Pitt",
+                "Leonardo DiCaprio",
+                "Johnny Depp",
+                1,
+                "celebrity_images/tom_hanks.jpg"
         ));
         
-        questionList.add(new Question(
-                "Who was the first President of the United States?",
-                "Thomas Jefferson",
-                "George Washington",
-                "John Adams",
-                "Benjamin Franklin",
-                2
+        questionList.add(new CelebrityQuestion(
+                "Identify this famous actor.",
+                "Robert Downey Jr.",
+                "Chris Evans",
+                "Chris Hemsworth",
+                "Mark Ruffalo",
+                1,
+                "celebrity_images/robert_downey_jr.jpg"
         ));
         
-        questionList.add(new Question(
-                "The French Revolution began in which year?",
-                "1787",
-                "1788",
-                "1789",
-                "1790",
-                3
+        // Questions without images
+        questionList.add(new CelebrityQuestion(
+                "Which actress won an Oscar for her role in 'La La Land'?",
+                "Emma Stone",
+                "Jennifer Lawrence",
+                "Natalie Portman",
+                "Meryl Streep",
+                1,
+                null // No image
         ));
         
-        questionList.add(new Question(
-                "Which ancient civilization built the Great Pyramid of Giza?",
-                "Romans",
-                "Greeks",
-                "Egyptians",
-                "Babylonians",
-                3
+        questionList.add(new CelebrityQuestion(
+                "Who is this celebrity?",
+                "Beyoncé",
+                "Rihanna",
+                "Taylor Swift",
+                "Ariana Grande",
+                1,
+                "celebrity_images/beyonce.jpg"
         ));
         
-        questionList.add(new Question(
-                "The Berlin Wall fell in which year?",
-                "1987",
-                "1988",
-                "1989",
-                "1990",
-                3
+        questionList.add(new CelebrityQuestion(
+                "Which singer is known as the 'Queen of Pop'?",
+                "Madonna",
+                "Britney Spears",
+                "Lady Gaga",
+                "Katy Perry",
+                1,
+                null // No image
         ));
         
-        questionList.add(new Question(
-                "Who wrote 'The Art of War'?",
-                "Confucius",
-                "Sun Tzu",
-                "Lao Tzu",
-                "Mencius",
-                2
+        questionList.add(new CelebrityQuestion(
+                "Which actor played Iron Man in the Marvel Cinematic Universe?",
+                "Chris Evans",
+                "Robert Downey Jr.",
+                "Chris Hemsworth",
+                "Tom Holland",
+                2,
+                null // No image
         ));
         
-        questionList.add(new Question(
-                "The Industrial Revolution started in which country?",
-                "France",
-                "Germany",
-                "United States",
-                "United Kingdom",
-                4
+        questionList.add(new CelebrityQuestion(
+                "Which actress starred in 'The Devil Wears Prada'?",
+                "Anne Hathaway",
+                "Meryl Streep",
+                "Emily Blunt",
+                "All of the above",
+                4,
+                null // No image
         ));
         
-        questionList.add(new Question(
-                "Which empire was ruled by Julius Caesar?",
-                "Greek Empire",
-                "Roman Empire",
-                "Byzantine Empire",
-                "Ottoman Empire",
-                2
+        questionList.add(new CelebrityQuestion(
+                "Identify this famous musician.",
+                "Elvis Presley",
+                "Michael Jackson",
+                "Freddie Mercury",
+                "David Bowie",
+                2,
+                null // Image not available - add manually to assets folder
         ));
         
-        questionList.add(new Question(
-                "The Renaissance period began in which country?",
-                "France",
-                "Italy",
-                "Spain",
-                "Germany",
-                2
+        questionList.add(new CelebrityQuestion(
+                "Who is this celebrity?",
+                "Oprah Winfrey",
+                "Ellen DeGeneres",
+                "Michelle Obama",
+                "Serena Williams",
+                1,
+                null // Image not available - add manually to assets folder
         ));
         
-        questionList.add(new Question(
-                "Who was known as the 'Iron Lady'?",
-                "Indira Gandhi",
-                "Margaret Thatcher",
-                "Golda Meir",
-                "Angela Merkel",
-                2
+        questionList.add(new CelebrityQuestion(
+                "Identify this famous athlete.",
+                "Cristiano Ronaldo",
+                "Lionel Messi",
+                "LeBron James",
+                "Serena Williams",
+                3,
+                null // Image not available - add manually to assets folder
         ));
 
         // Shuffle questions for variety
@@ -175,13 +199,40 @@ public class HistoryQuizActivity extends AppCompatActivity {
         }
 
         isAnswered = false;
-        Question currentQuestion = questionList.get(currentQuestionIndex);
+        CelebrityQuestion currentQuestion = questionList.get(currentQuestionIndex);
         
         tvQuestion.setText(currentQuestion.getQuestion());
         tvAnswer1.setText(currentQuestion.getOption1());
         tvAnswer2.setText(currentQuestion.getOption2());
         tvAnswer3.setText(currentQuestion.getOption3());
         tvAnswer4.setText(currentQuestion.getOption4());
+
+        // Show or hide celebrity image
+        if (currentQuestion.hasImage()) {
+            Log.d("CelebrityQuiz", "Question has image. isResourceImage: " + currentQuestion.isResourceImage());
+            if (currentQuestion.isResourceImage()) {
+                // Load from drawable resources
+                Log.d("CelebrityQuiz", "Loading from resource: " + currentQuestion.getImageResourceId());
+                ivCelebrity.setImageResource(currentQuestion.getImageResourceId());
+                ivCelebrity.setVisibility(View.VISIBLE);
+            } else {
+                // Load from assets folder
+                Log.d("CelebrityQuiz", "Loading from assets: " + currentQuestion.getImageFileName());
+                loadImageFromAssets(currentQuestion.getImageFileName());
+            }
+            // Make sure the card is visible
+            cardCelebrityImage.setVisibility(View.VISIBLE);
+            // Request layout update to ensure proper display
+            cardCelebrityImage.requestLayout();
+            cardCelebrityImage.invalidate();
+            Log.d("CelebrityQuiz", "Image container visibility set to VISIBLE");
+        } else {
+            // Clear image and hide container
+            Log.d("CelebrityQuiz", "Question has no image, hiding container");
+            ivCelebrity.setImageDrawable(null);
+            ivCelebrity.setVisibility(View.GONE);
+            cardCelebrityImage.setVisibility(View.GONE);
+        }
 
         // Reset answer card colors
         resetAnswerCards();
@@ -206,7 +257,7 @@ public class HistoryQuizActivity extends AppCompatActivity {
         }
 
         isAnswered = true;
-        Question currentQuestion = questionList.get(currentQuestionIndex);
+        CelebrityQuestion currentQuestion = questionList.get(currentQuestionIndex);
         int correctAnswer = currentQuestion.getCorrectAnswer();
 
         // Highlight the selected answer
@@ -271,6 +322,40 @@ public class HistoryQuizActivity extends AppCompatActivity {
         tvScore.setText("Score: " + score);
     }
 
+    private void loadImageFromAssets(String fileName) {
+        try {
+            Log.d("CelebrityQuiz", "Attempting to load image: " + fileName);
+            // Get input stream from assets
+            InputStream ims = getAssets().open(fileName);
+            
+            // Use BitmapFactory for more reliable loading
+            Bitmap bitmap = BitmapFactory.decodeStream(ims);
+            ims.close();
+            
+            if (bitmap != null) {
+                // Set the bitmap to the ImageView
+                ivCelebrity.setImageBitmap(bitmap);
+                // Make sure ImageView is visible
+                ivCelebrity.setVisibility(View.VISIBLE);
+                Log.d("CelebrityQuiz", "Image loaded successfully: " + fileName + ", Size: " + bitmap.getWidth() + "x" + bitmap.getHeight());
+            } else {
+                Log.e("CelebrityQuiz", "Bitmap is null for: " + fileName);
+                ivCelebrity.setImageDrawable(null);
+                cardCelebrityImage.setVisibility(View.GONE);
+            }
+        } catch (IOException ex) {
+            Log.e("CelebrityQuiz", "Error loading image from assets: " + fileName, ex);
+            Log.e("CelebrityQuiz", "Exception details: " + ex.getMessage());
+            // If image fails to load, hide the image container
+            ivCelebrity.setImageDrawable(null);
+            cardCelebrityImage.setVisibility(View.GONE);
+        } catch (Exception ex) {
+            Log.e("CelebrityQuiz", "Unexpected error loading image: " + fileName, ex);
+            ivCelebrity.setImageDrawable(null);
+            cardCelebrityImage.setVisibility(View.GONE);
+        }
+    }
+
     private void startTimer() {
         if (timer != null) {
             timer.cancel();
@@ -290,7 +375,7 @@ public class HistoryQuizActivity extends AppCompatActivity {
                 // Auto move to next question if time runs out
                 if (!isAnswered) {
                     isAnswered = true;
-                    Question currentQuestion = questionList.get(currentQuestionIndex);
+                    CelebrityQuestion currentQuestion = questionList.get(currentQuestionIndex);
                     CardView correctCard = getAnswerCard(currentQuestion.getCorrectAnswer());
                     correctCard.setCardBackgroundColor(getResources().getColor(R.color.tile_history, null));
                     disableAnswerCards();
@@ -315,7 +400,7 @@ public class HistoryQuizActivity extends AppCompatActivity {
             timer.cancel();
         }
         // Navigate to result screen
-        Intent intent = new Intent(HistoryQuizActivity.this, QuizResultActivity.class);
+        Intent intent = new Intent(CelebrityQuestionsActivity.this, QuizResultActivity.class);
         intent.putExtra("score", score);
         intent.putExtra("totalQuestions", questionList.size());
         startActivity(intent);

@@ -12,6 +12,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.gamev.quizsparkstd.CelebrityQuiz.CelebrityQuestionsActivity;
 import com.gamev.quizsparkstd.HistoryQuiz.HistoryQuizActivity;
 import com.gamev.quizsparkstd.R;
 
@@ -56,8 +57,8 @@ public class MainScreenActivity extends AppCompatActivity {
         cardCelebrity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: Navigate to Celebrity Quiz activity
-                Toast.makeText(MainScreenActivity.this, "Celebrity Quiz", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainScreenActivity.this, CelebrityQuestionsActivity.class);
+                startActivity(intent);
             }
         });
 
