@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">QuizSpark</string>
+    <string name="loading">Loading…</string>
+    <string name="description">Floating</string>
+    <string name="loading_bg">Load background image</string>
 </resources>
