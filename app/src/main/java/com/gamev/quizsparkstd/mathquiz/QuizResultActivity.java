@@ -27,7 +27,7 @@ public class QuizResultActivity extends AppCompatActivity {
         TextView tvFinalScore = findViewById(R.id.tvFinalScore);
         tvFinalScore.setText("Score: " + score + "/" + total);
 
-        Button btnMainMenu = findViewById(R.id.btnMainMenu);
+        Button btnMainMenu = findViewById(R.id.cardBackButton);
         btnMainMenu.setOnClickListener(v -> {
             // If your main screen is MainActivity:
             Intent i = new Intent(QuizResultActivity.this, MainActivity.class);
