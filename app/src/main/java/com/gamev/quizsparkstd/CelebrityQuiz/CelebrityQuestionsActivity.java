@@ -42,6 +42,7 @@ public class CelebrityQuestionsActivity extends AppCompatActivity {
     private CountDownTimer timer;
     private int timeLeft = 60; // 60 seconds per question
     private boolean isAnswered = false;
+    private TextView tvProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +76,7 @@ public class CelebrityQuestionsActivity extends AppCompatActivity {
         cardAnswer2 = findViewById(R.id.cardAnswer2);
         cardAnswer3 = findViewById(R.id.cardAnswer3);
         cardAnswer4 = findViewById(R.id.cardAnswer4);
+        tvProgress = findViewById(R.id.tvProgress);
 
         // Set click listeners
         cardAnswer1.setOnClickListener(v -> onAnswerClick(1));
@@ -243,8 +245,9 @@ public class CelebrityQuestionsActivity extends AppCompatActivity {
         
         // Update score display
         updateScore();
+        updateProgress(currentQuestionIndex + 1, questionList.size());
     }
-
+    private void updateProgress(int current, int total) { tvProgress.setText("Q " + current + "/" + total); }
     private void resetAnswerCards() {
         cardAnswer1.setCardBackgroundColor(getResources().getColor(R.color.primary_blue, null));
         cardAnswer2.setCardBackgroundColor(getResources().getColor(R.color.primary_blue, null));

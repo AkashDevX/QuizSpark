@@ -15,6 +15,8 @@ import androidx.core.view.WindowInsetsCompat;
 import com.gamev.quizsparkstd.CelebrityQuiz.CelebrityQuestionsActivity;
 import com.gamev.quizsparkstd.HistoryQuiz.HistoryQuizActivity;
 import com.gamev.quizsparkstd.R;
+import com.gamev.quizsparkstd.aboutus.AboutUsActivity;
+import com.gamev.quizsparkstd.mathquiz.MathCategoryActivity;
 
 public class MainScreenActivity extends AppCompatActivity {
 
@@ -49,8 +51,8 @@ public class MainScreenActivity extends AppCompatActivity {
         cardMaths.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: Navigate to Maths Quiz activity
-                Toast.makeText(MainScreenActivity.this, "Maths Quiz", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainScreenActivity.this, MathCategoryActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -65,8 +67,8 @@ public class MainScreenActivity extends AppCompatActivity {
         cardAbout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: Navigate to About Us activity
-                Toast.makeText(MainScreenActivity.this, "About Us", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainScreenActivity.this, AboutUsActivity.class);
+                startActivity(intent);
             }
         });
     }

@@ -5,68 +5,126 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_blue"
+    android:background="@drawable/bg_quizkit_gradient"
     tools:context=".HistoryQuiz.HistoryQuizActivity">
 
-    <!-- Header - Static -->
+    <!-- Header -->
     <TextView
         android:id="@+id/tvHeader"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:paddingTop="18dp"
+        android:paddingBottom="10dp"
         android:text="History Quiz"
-        android:textColor="@color/primary_blue_dark"
-        android:textSize="32sp"
+        android:textColor="@android:color/white"
+        android:textSize="26sp"
         android:textStyle="bold"
-        android:gravity="center"
-        android:padding="16dp"
-        android:background="@color/white"
-        android:elevation="4dp"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:fontFamily="@font/poppins_bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Score and Time Container -->
-    <LinearLayout
+    <!-- Score + Time (KEEP ID llScoreTime) -->
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/llScoreTime"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="16dp"
-        android:background="@color/background_blue_dark"
-        android:elevation="2dp"
-        app:layout_constraintTop_toBottomOf="@id/tvHeader">
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginTop="10dp"
+        app:cardCornerRadius="22dp"
+        app:cardElevation="0dp"
+        app:cardBackgroundColor="#22FFFFFF"
+        app:strokeColor="#35FFFFFF"
+        app:strokeWidth="1dp"
+        app:layout_constraintTop_toBottomOf="@id/tvHeader"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <TextView
-            android:id="@+id/tvScore"
-            android:layout_width="0dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Score: 0"
-            android:textColor="@color/primary_blue_dark"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:gravity="start" />
+            android:padding="14dp">
 
-        <TextView
-            android:id="@+id/tvTimeLeft"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Time: 60s"
-            android:textColor="@color/primary_blue_dark"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:gravity="end" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tvScore"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Score: 0"
+                android:textColor="#F4F6FF"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/poppins_bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tvTimeLeft" />
 
-    <!-- Question Container - Dynamic -->
-    <androidx.cardview.widget.CardView
+            <TextView
+                android:id="@+id/tvTimeLeft"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Time: 60s"
+                android:textColor="#F4F6FF"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/poppins_bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Progress Pill -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardProgressPill"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="18dp"
+        app:cardCornerRadius="18dp"
+        app:cardElevation="0dp"
+        app:cardBackgroundColor="#22FFFFFF"
+        app:strokeColor="#35FFFFFF"
+        app:strokeWidth="1dp"
+        app:layout_constraintTop_toBottomOf="@id/llScoreTime"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp">
+
+            <TextView
+                android:id="@+id/tvProgress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Q 1/10"
+                android:textColor="#F4F6FF"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/poppins_bold" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Question Card -->
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardQuestion"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="24dp"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="8dp"
-        app:cardBackgroundColor="@color/white"
-        app:layout_constraintTop_toBottomOf="@id/llScoreTime"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginTop="12dp"
+        app:cardCornerRadius="26dp"
+        app:cardElevation="0dp"
+        app:cardBackgroundColor="#22FFFFFF"
+        app:strokeColor="#35FFFFFF"
+        app:strokeWidth="1dp"
+        app:layout_constraintTop_toBottomOf="@id/cardProgressPill"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -74,131 +132,144 @@
             android:id="@+id/tvQuestion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Question will appear here"
-            android:textColor="@color/text_secondary"
-            android:textSize="20sp"
-            android:textStyle="bold"
+            android:minHeight="120dp"
+            android:padding="18dp"
             android:gravity="center"
-            android:padding="24dp"
-            android:minHeight="120dp" />
-    </androidx.cardview.widget.CardView>
+            android:text="Question will appear here"
+            android:textColor="#F4F6FF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/poppins_bold"
+            android:lineSpacingExtra="4dp" />
+    </com.google.android.material.card.MaterialCardView>
 
-    <!-- Answers Container - Dynamic -->
+    <!-- Answers -->
     <LinearLayout
         android:id="@+id/llAnswers"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:orientation="vertical"
-        android:layout_margin="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginTop="10dp"
+        android:paddingBottom="18dp"
         app:layout_constraintTop_toBottomOf="@id/cardQuestion"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Answer 1 -->
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardAnswer1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_marginTop="10dp"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="6dp"
-            app:cardBackgroundColor="@color/primary_blue">
+            app:cardCornerRadius="22dp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="#1AFFFFFF"
+            app:strokeColor="#2FFFFFFF"
+            app:strokeWidth="1dp">
 
             <TextView
                 android:id="@+id/tvAnswer1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Answer 1"
-                android:textColor="@color/text_primary"
-                android:textSize="18sp"
-                android:textStyle="bold"
+                android:minHeight="56dp"
+                android:padding="16dp"
                 android:gravity="center"
-                android:padding="20dp"
-                android:minHeight="60dp" />
-        </androidx.cardview.widget.CardView>
+                android:text="Answer 1"
+                android:textColor="#F4F6FF"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/poppins_bold" />
+        </com.google.android.material.card.MaterialCardView>
 
-        <!-- Answer 2 -->
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardAnswer2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_marginTop="10dp"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="6dp"
-            app:cardBackgroundColor="@color/primary_blue">
+            app:cardCornerRadius="22dp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="#1AFFFFFF"
+            app:strokeColor="#2FFFFFFF"
+            app:strokeWidth="1dp">
 
             <TextView
                 android:id="@+id/tvAnswer2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Answer 2"
-                android:textColor="@color/text_primary"
-                android:textSize="18sp"
-                android:textStyle="bold"
+                android:minHeight="56dp"
+                android:padding="16dp"
                 android:gravity="center"
-                android:padding="20dp"
-                android:minHeight="60dp" />
-        </androidx.cardview.widget.CardView>
+                android:text="Answer 2"
+                android:textColor="#F4F6FF"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/poppins_bold" />
+        </com.google.android.material.card.MaterialCardView>
 
-        <!-- Answer 3 -->
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardAnswer3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_marginTop="10dp"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="6dp"
-            app:cardBackgroundColor="@color/primary_blue">
+            app:cardCornerRadius="22dp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="#1AFFFFFF"
+            app:strokeColor="#2FFFFFFF"
+            app:strokeWidth="1dp">
 
             <TextView
                 android:id="@+id/tvAnswer3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Answer 3"
-                android:textColor="@color/text_primary"
-                android:textSize="18sp"
-                android:textStyle="bold"
+                android:minHeight="56dp"
+                android:padding="16dp"
                 android:gravity="center"
-                android:padding="20dp"
-                android:minHeight="60dp" />
-        </androidx.cardview.widget.CardView>
+                android:text="Answer 3"
+                android:textColor="#F4F6FF"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/poppins_bold" />
+        </com.google.android.material.card.MaterialCardView>
 
-        <!-- Answer 4 -->
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardAnswer4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_marginTop="10dp"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="6dp"
-            app:cardBackgroundColor="@color/primary_blue">
+            app:cardCornerRadius="22dp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="#1AFFFFFF"
+            app:strokeColor="#2FFFFFFF"
+            app:strokeWidth="1dp">
 
             <TextView
                 android:id="@+id/tvAnswer4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Answer 4"
-                android:textColor="@color/text_primary"
-                android:textSize="18sp"
-                android:textStyle="bold"
+                android:minHeight="56dp"
+                android:padding="16dp"
                 android:gravity="center"
-                android:padding="20dp"
-                android:minHeight="60dp" />
-        </androidx.cardview.widget.CardView>
+                android:text="Answer 4"
+                android:textColor="#F4F6FF"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/poppins_bold" />
+        </com.google.android.material.card.MaterialCardView>
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

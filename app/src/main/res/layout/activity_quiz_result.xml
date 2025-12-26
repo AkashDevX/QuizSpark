@@ -5,89 +5,171 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_blue"
+    android:background="@drawable/bg_quizkit_gradient"
     tools:context=".HistoryQuiz.HistoryQuizActivity">
 
-    <!-- Score Display Card -->
-    <androidx.cardview.widget.CardView
+    <!-- Top small label -->
+    <TextView
+        android:id="@+id/tvResultTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Quiz Result"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/poppins_bold"
+        android:layout_marginTop="18dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="18dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Score Display Card (KEEP ID cardScore) -->
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardScore"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="32dp"
-        app:cardCornerRadius="24dp"
-        app:cardElevation="16dp"
-        app:cardBackgroundColor="@color/white"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginTop="14dp"
+        app:cardCornerRadius="28dp"
+        app:cardElevation="0dp"
+        app:cardBackgroundColor="#22FFFFFF"
+        app:strokeColor="#35FFFFFF"
+        app:strokeWidth="1dp"
+        app:layout_constraintTop_toBottomOf="@id/tvResultTitle"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/tvMessage">
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:padding="32dp">
+            android:padding="18dp">
 
-            <TextView
+            <!-- Badge -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardBadge"
                 android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                app:cardCornerRadius="17dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="#1AFFFFFF"
+                app:strokeColor="#2FFFFFFF"
+                app:strokeWidth="1dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <TextView
+                    android:id="@+id/tvBadge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:text="Score"
+                    android:textColor="#F4F6FF"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins_bold" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- "Your Score" -->
+            <TextView
+                android:id="@+id/tvYourScoreLabel"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Your Score"
-                android:textColor="@color/text_secondary"
-                android:textSize="24sp"
+                android:textColor="#DCE6FF"
+                android:textSize="16sp"
                 android:textStyle="bold"
-                android:layout_marginBottom="16dp" />
+                android:fontFamily="@font/poppins_bold"
+                android:layout_marginTop="12dp"
+                app:layout_constraintTop_toBottomOf="@id/cardBadge"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:gravity="center" />
 
+            <!-- Final Score (KEEP ID tvFinalScore) -->
             <TextView
                 android:id="@+id/tvFinalScore"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="0/10"
-                android:textColor="@color/primary_blue_dark"
-                android:textSize="48sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+                android:textColor="#FFFFFF"
+                android:textSize="52sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/poppins_bold"
+                android:gravity="center"
+                android:layout_marginTop="6dp"
+                app:layout_constraintTop_toBottomOf="@id/tvYourScoreLabel"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Success Message -->
+            <!-- Hint text -->
+            <TextView
+                android:id="@+id/tvHint"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Try again to beat your best!"
+                android:textColor="#BFD3FF"
+                android:textSize="12sp"
+                android:fontFamily="@font/poppins_regular"
+                android:gravity="center"
+                android:layout_marginTop="4dp"
+                app:layout_constraintTop_toBottomOf="@id/tvFinalScore"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Success Message (KEEP ID tvMessage) -->
     <TextView
         android:id="@+id/tvMessage"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="24dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="18dp"
         android:text="Well Done!"
-        android:textColor="@color/primary_blue_dark"
-        android:textSize="32sp"
+        android:textColor="#FFFFFF"
+        android:textSize="26sp"
         android:textStyle="bold"
+        android:fontFamily="@font/poppins_bold"
         android:gravity="center"
         android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/cardScore"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Great Knowledge Message (for high scores) -->
+    <!-- Great Knowledge Message (KEEP ID tvGreatKnowledge) -->
     <TextView
         android:id="@+id/tvGreatKnowledge"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="18dp"
         android:text="Great Knowledge You Have!"
-        android:textColor="@color/tile_history"
-        android:textSize="28sp"
+        android:textColor="#DCE6FF"
+        android:textSize="18sp"
         android:textStyle="bold"
+        android:fontFamily="@font/poppins_bold"
         android:gravity="center"
         android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/tvMessage"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Celebration Icon/Emoji Area -->
+    <!-- Celebration Row (KEEP ID llCelebration) -->
     <LinearLayout
         android:id="@+id/llCelebration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
+        android:layout_marginTop="10dp"
         android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/tvGreatKnowledge"
         app:layout_constraintStart_toStartOf="parent"
@@ -98,53 +180,55 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="🎉"
-            android:textSize="40sp"
-            android:layout_margin="8dp" />
+            android:textSize="34sp"
+            android:layout_margin="6dp" />
 
         <TextView
             android:id="@+id/tvEmoji2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="⭐"
-            android:textSize="40sp"
-            android:layout_margin="8dp" />
+            android:textSize="34sp"
+            android:layout_margin="6dp" />
 
         <TextView
             android:id="@+id/tvEmoji3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="🏆"
-            android:textSize="40sp"
-            android:layout_margin="8dp" />
+            android:textSize="34sp"
+            android:layout_margin="6dp" />
     </LinearLayout>
 
-    <!-- Back to Main Screen Button -->
-    <androidx.cardview.widget.CardView
+    <!-- Back Button (KEEP ID cardBackButton) -->
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardBackButton"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="24dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginBottom="18dp"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
         android:visibility="invisible"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="8dp"
-        app:cardBackgroundColor="@color/primary_blue_dark"
+        app:cardCornerRadius="22dp"
+        app:cardElevation="0dp"
+        app:cardBackgroundColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
         <TextView
+            android:id="@+id/tvBackText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="Back to Main Screen"
-            android:textColor="@color/text_primary"
-            android:textSize="20sp"
+            android:textColor="#1A1F3A"
+            android:textSize="16sp"
             android:textStyle="bold"
-            android:gravity="center"
-            android:padding="20dp" />
-    </androidx.cardview.widget.CardView>
+            android:fontFamily="@font/poppins_bold"
+            android:gravity="center" />
+    </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-

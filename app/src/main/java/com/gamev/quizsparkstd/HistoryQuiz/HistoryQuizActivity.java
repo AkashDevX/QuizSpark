@@ -31,6 +31,7 @@ public class HistoryQuizActivity extends AppCompatActivity {
     private CountDownTimer timer;
     private int timeLeft = 60; // 60 seconds per question
     private boolean isAnswered = false;
+    private TextView tvProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +63,8 @@ public class HistoryQuizActivity extends AppCompatActivity {
         cardAnswer2 = findViewById(R.id.cardAnswer2);
         cardAnswer3 = findViewById(R.id.cardAnswer3);
         cardAnswer4 = findViewById(R.id.cardAnswer4);
+        tvProgress = findViewById(R.id.tvProgress);
+
 
         // Set click listeners
         cardAnswer1.setOnClickListener(v -> onAnswerClick(1));
@@ -167,7 +170,7 @@ public class HistoryQuizActivity extends AppCompatActivity {
         // Shuffle questions for variety
         Collections.shuffle(questionList);
     }
-
+    private void updateProgress(int current, int total) { tvProgress.setText("Q " + current + "/" + total); }
     private void displayQuestion() {
         if (currentQuestionIndex >= questionList.size()) {
             finishQuiz();
@@ -191,6 +194,7 @@ public class HistoryQuizActivity extends AppCompatActivity {
         
         // Update score display
         updateScore();
+        updateProgress(currentQuestionIndex + 1, questionList.size());
     }
 
     private void resetAnswerCards() {
