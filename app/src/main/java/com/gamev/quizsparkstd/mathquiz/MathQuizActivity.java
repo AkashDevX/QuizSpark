@@ -1,387 +1,258 @@
 package com.gamev.quizsparkstd.mathquiz;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.widget.Button;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
+import com.gamev.quizsparkstd.HistoryQuiz.QuizResultActivity;
+import com.gamev.quizsparkstd.QuestionModels.Question;
 import com.gamev.quizsparkstd.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-
-
 
 public class MathQuizActivity extends AppCompatActivity {
 
-    private TextView tvQuestion, tvResult, tvScore, tvProgress, tvTimer;
-    private RadioGroup rgOptions;
-    private RadioButton rb1, rb2, rb3, rb4;
-    private Button btnSubmit, btnNext;
+    private TextView tvHeader, tvScore, tvTimeLeft, tvQuestion;
+    private TextView tvAnswer1, tvAnswer2, tvAnswer3, tvAnswer4;
+    private CardView cardAnswer1, cardAnswer2, cardAnswer3, cardAnswer4;
 
-    private final Random random = new Random();
-    private String mode = MathCategoryActivity.MODE_ADD;
-
+    private List<Question> questionList;
+    private int currentQuestionIndex = 0;
     private int score = 0;
-    private int currentQ = 1;
-    private final int totalQ = 20;
-
-    private int correctAnswer = 0;
-    private boolean answered = false;
-
     private CountDownTimer timer;
-    private final long TIME_PER_QUESTION_MS = 15000; // 15 seconds (change to 20000 for 20 seconds)
-    private int minByQuestion() {
-        // Q1-7: 2 digits, Q8-14: 3 digits, Q15-20: 4 digits
-        if (currentQ <= 7) return 10;
-        if (currentQ <= 14) return 100;
-        return 1000;
-    }
-
-    private int maxByQuestion() {
-        if (currentQ <= 7) return 99;
-        if (currentQ <= 14) return 999;
-        return 9999;
-    }
-
+    private int timeLeft = 60; // 60 seconds per question
+    private boolean isAnswered = false;
+    private String mode = MathCategoryActivity.MODE_ADD;
+    private final Random random = new Random();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_math_quiz);
-        String incoming = getIntent().getStringExtra(MathCategoryActivity.EXTRA_MODE);
-        if (incoming != null) mode = incoming;
-
-
-        tvQuestion = findViewById(R.id.tvQuestion);
-        tvResult   = findViewById(R.id.tvResult);
-        tvScore    = findViewById(R.id.tvScore);
-        tvProgress = findViewById(R.id.tvProgress);
-        tvTimer    = findViewById(R.id.tvTimer);
-
-        rgOptions = findViewById(R.id.rgOptions);
-        rb1 = findViewById(R.id.rb1);
-        rb2 = findViewById(R.id.rb2);
-        rb3 = findViewById(R.id.rb3);
-        rb4 = findViewById(R.id.rb4);
-
-        btnSubmit = findViewById(R.id.btnSubmit);
-        btnNext   = findViewById(R.id.btnNext);
-
-        loadQuestion();
-
-        btnSubmit.setOnClickListener(v -> submitAnswer());
-
-        btnNext.setOnClickListener(v -> {
-            if (currentQ >= totalQ) {
-                finishQuiz();
-            } else {
-                currentQ++;
-                loadQuestion();
-            }
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
         });
-    }
 
-    private void loadQuestion() {
-        answered = false;
-        btnNext.setEnabled(false);
-        btnSubmit.setEnabled(true);
-
-        tvResult.setText("");
-        rgOptions.clearCheck();
-        setOptionsEnabled(true);
-
-        tvProgress.setText("Q: " + currentQ + "/" + totalQ);
-        tvScore.setText("Score: " + score);
-
-        // ✅ Handle non-operator modes first
-        if (mode.equals(MathCategoryActivity.MODE_BIGGEST)) {
-            loadBiggestNumberQuestion();
-            startTimer();
-            return;
+        String incoming = getIntent().getStringExtra(MathCategoryActivity.EXTRA_MODE);
+        if (incoming != null) {
+            mode = incoming;
         }
 
-        if (mode.equals(MathCategoryActivity.MODE_NEXT)) {
-            loadNextNumberQuestion();
-            startTimer();
-            return;
-        }
-
-        if (mode.equals(MathCategoryActivity.MODE_BODMAS)) {
-            loadBodmasQuestion();
-            startTimer();
-            return;
-        }
-
-        int min, max;
-        if (currentQ <= 7) {
-            min = 10;   max = 99;
-        } else if (currentQ <= 14) {
-            min = 100;  max = 999;
-        } else {
-            min = 1000; max = 9999;
-        }
-
-        // ✅ Operator-based question (ADD/SUB/MUL/DIV)
-        char op = getOperatorFromMode();
-        int a, b;
-
-        if (op == '/') {
-            // Keep integer division but increase difficulty
-            int divMax = (currentQ <= 7) ? 12 : (currentQ <= 14 ? 20 : 30);
-            b = randomInRange(2, divMax);
-            int res = randomInRange(2, divMax);
-            a = b * res;
-            correctAnswer = a / b;
-
-        } else if (op == '-') {
-            // Use digit range and avoid negative
-            a = randomInRange(min, max);
-            b = randomInRange(min, a);
-            correctAnswer = a - b;
-
-        } else if (op == '*') {
-            // Increase multiplication difficulty gradually (but avoid huge numbers)
-            int mulMax = (currentQ <= 7) ? 12 : (currentQ <= 14 ? 20 : 30);
-            a = randomInRange(2, mulMax);
-            b = randomInRange(2, mulMax);
-            correctAnswer = a * b;
-
-        } else { // '+'
-            // Use digit range
-            a = randomInRange(min, max);
-            b = randomInRange(min, max);
-            correctAnswer = a + b;
-        }
-
-        // Display question (use × and ÷ symbols nicely)
-        String symbol = (op == '*') ? "×" : (op == '/') ? "÷" : String.valueOf(op);
-        tvQuestion.setText(a + " " + symbol + " " + b + " = ?");
-
-        ArrayList<Integer> options = buildOptions(correctAnswer, op);
-        applyOptions(options);
-
+        initializeViews();
+        initializeQuestions();
+        displayQuestion();
         startTimer();
     }
 
+    private void initializeViews() {
+        tvHeader = findViewById(R.id.tvHeader);
+        tvScore = findViewById(R.id.tvScore);
+        tvTimeLeft = findViewById(R.id.tvTimeLeft);
+        tvQuestion = findViewById(R.id.tvQuestion);
+        tvAnswer1 = findViewById(R.id.tvAnswer1);
+        tvAnswer2 = findViewById(R.id.tvAnswer2);
+        tvAnswer3 = findViewById(R.id.tvAnswer3);
+        tvAnswer4 = findViewById(R.id.tvAnswer4);
+        cardAnswer1 = findViewById(R.id.cardAnswer1);
+        cardAnswer2 = findViewById(R.id.cardAnswer2);
+        cardAnswer3 = findViewById(R.id.cardAnswer3);
+        cardAnswer4 = findViewById(R.id.cardAnswer4);
 
-    private void applyOptions(ArrayList<Integer> options) {
-        rb1.setText(String.valueOf(options.get(0)));
-        rb2.setText(String.valueOf(options.get(1)));
-        rb3.setText(String.valueOf(options.get(2)));
-        rb4.setText(String.valueOf(options.get(3)));
-    }
-    private void loadBiggestNumberQuestion() {
-        int min = minByQuestion();
-        int max = maxByQuestion();
+        // Update header based on mode
+        updateHeader();
 
-        int a = randomInRange(min, max);
-        int b = randomInRange(min, max);
-        int c = randomInRange(min, max);
-        int d = randomInRange(min, max);
-
-        correctAnswer = Math.max(Math.max(a, b), Math.max(c, d));
-
-        tvQuestion.setText("Which is the biggest number?\n" + a + " , " + b + " , " + c + " , " + d);
-
-        ArrayList<Integer> options = new ArrayList<>();
-        options.add(a);
-        options.add(b);
-        options.add(c);
-        options.add(d);
-
-        Collections.shuffle(options);
-        applyOptions(options);
+        // Set click listeners
+        cardAnswer1.setOnClickListener(v -> onAnswerClick(1));
+        cardAnswer2.setOnClickListener(v -> onAnswerClick(2));
+        cardAnswer3.setOnClickListener(v -> onAnswerClick(3));
+        cardAnswer4.setOnClickListener(v -> onAnswerClick(4));
     }
 
-    private void loadBodmasQuestion() {
-        int min = (currentQ <= 7) ? 2 : (currentQ <= 14 ? 5 : 10);
-        int max = (currentQ <= 7) ? 12 : (currentQ <= 14 ? 25 : 60);
-
-        int pattern = random.nextInt(4);
-
-        int a, b, c, d, e;
-        String expr;
-
-        if (pattern == 0) {
-            a = randomInRange(min, max);
-            b = randomInRange(2, 12);
-            c = randomInRange(2, 12);
-            d = randomInRange(min, max);
-            correctAnswer = a + (b * c) - d;
-            expr = a + " + " + b + " × " + c + " − " + d;
-
-        } else if (pattern == 1) {
-            a = randomInRange(min, max);
-            b = randomInRange(min, max);
-            c = randomInRange(2, 12);
-            correctAnswer = (a + b) * c;
-            expr = "(" + a + " + " + b + ") × " + c;
-
-        } else if (pattern == 2) {
-            a = randomInRange(2, 15);
-            b = randomInRange(2, 15);
-
-            d = randomInRange(2, 12);
-            int q = randomInRange(2, 12);
-            c = d * q; // c/d = q integer
-
-            correctAnswer = (a * b) + (c / d);
-            expr = "(" + a + " × " + b + ") + (" + c + " ÷ " + d + ")";
-
-        } else { // pattern == 3
-            a = randomInRange(min, max);
-            b = randomInRange(min, max);
-            c = randomInRange(2, 10);
-            d = randomInRange(2, 20);
-            e = randomInRange(2, 10);
-
-            correctAnswer = (a + b) * c - (d * e);
-            expr = "(" + a + " + " + b + ") × " + c + " − (" + d + " × " + e + ")";
+    private void updateHeader() {
+        switch (mode) {
+            case MathCategoryActivity.MODE_ADD:
+                tvHeader.setText("Addition Quiz");
+                break;
+            case MathCategoryActivity.MODE_SUB:
+                tvHeader.setText("Subtraction Quiz");
+                break;
+            case MathCategoryActivity.MODE_MUL:
+                tvHeader.setText("Multiplication Quiz");
+                break;
+            case MathCategoryActivity.MODE_DIV:
+                tvHeader.setText("Division Quiz");
+                break;
+            case MathCategoryActivity.MODE_BIGGEST:
+                tvHeader.setText("Biggest Number Quiz");
+                break;
+            case MathCategoryActivity.MODE_NEXT:
+                tvHeader.setText("Next Number Quiz");
+                break;
+            case MathCategoryActivity.MODE_BODMAS:
+                tvHeader.setText("BODMAS Quiz");
+                break;
+            default:
+                tvHeader.setText("Maths Quiz");
         }
+    }
 
-        tvQuestion.setText("Solve (BODMAS):\n" + expr + " = ?");
-
-        ArrayList<Integer> options = new ArrayList<>();
-        options.add(correctAnswer);
-
-        HashSet<Integer> used = new HashSet<>();
-        used.add(correctAnswer);
-
-        while (options.size() < 4) {
-            int wrong = correctAnswer + randomInRange(-20, 20);
-            if (!used.contains(wrong)) {
-                used.add(wrong);
-                options.add(wrong);
+    private void initializeQuestions() {
+        questionList = new ArrayList<>();
+        
+        // Generate 10 questions based on mode
+        for (int i = 1; i <= 10; i++) {
+            Question question = generateQuestion(i);
+            if (question != null) {
+                questionList.add(question);
             }
         }
 
-        Collections.shuffle(options);
-        applyOptions(options);
+        // Shuffle questions for variety
+        Collections.shuffle(questionList);
     }
 
-
-    private void loadNextNumberQuestion() {
-        int start = randomInRange(1, 20);
-        int step = randomInRange(2, 10);
-
-        int n1 = start;
-        int n2 = start + step;
-        int n3 = start + (2 * step);
-        int n4 = start + (3 * step);
-
-        correctAnswer = start + (4 * step);
-
-        tvQuestion.setText("What is the next number?\n" + n1 + ", " + n2 + ", " + n3 + ", " + n4 + ", ?");
-
-        ArrayList<Integer> options = new ArrayList<>();
-        options.add(correctAnswer);
-
-        // 3 wrong answers
-        HashSet<Integer> used = new HashSet<>();
-        used.add(correctAnswer);
-
-        while (options.size() < 4) {
-            int wrong = correctAnswer + randomInRange(-10, 10);
-            if (wrong <= 0) continue;
-            if (!used.contains(wrong)) {
-                used.add(wrong);
-                options.add(wrong);
-            }
-        }
-
-        Collections.shuffle(options);
-        applyOptions(options);
-    }
-
-
-
-    private void submitAnswer() {
-        if (answered) return;
-
-        int selectedId = rgOptions.getCheckedRadioButtonId();
-        if (selectedId == -1) {
-            Toast.makeText(this, "Select an answer", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        stopTimer();
-
-        RadioButton selected = findViewById(selectedId);
-        int selectedValue = Integer.parseInt(selected.getText().toString());
-
-        answered = true;
-        btnNext.setEnabled(true);
-        btnSubmit.setEnabled(false);
-        setOptionsEnabled(false);
-
-        if (selectedValue == correctAnswer) {
-            score++;
-            tvResult.setText("✅ Correct!");
+    private Question generateQuestion(int questionNumber) {
+        int min, max;
+        if (questionNumber <= 3) {
+            min = 10;
+            max = 99;
+        } else if (questionNumber <= 7) {
+            min = 100;
+            max = 999;
         } else {
-            tvResult.setText("❌ Wrong! Correct: " + correctAnswer);
+            min = 1000;
+            max = 9999;
         }
-        tvScore.setText("Score: " + score);
-    }
 
-    private void startTimer() {
-        stopTimer();
-        timer = new CountDownTimer(TIME_PER_QUESTION_MS, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                long sec = millisUntilFinished / 1000;
-                tvTimer.setText("Time: " + sec + "s");
+        String questionText;
+        int correctAnswer;
+        ArrayList<Integer> options;
+
+        if (mode.equals(MathCategoryActivity.MODE_BIGGEST)) {
+            int a = randomInRange(min, max);
+            int b = randomInRange(min, max);
+            int c = randomInRange(min, max);
+            int d = randomInRange(min, max);
+            correctAnswer = Math.max(Math.max(a, b), Math.max(c, d));
+            questionText = "Which is the biggest number?\n" + a + " , " + b + " , " + c + " , " + d;
+            options = new ArrayList<>();
+            options.add(a);
+            options.add(b);
+            options.add(c);
+            options.add(d);
+            Collections.shuffle(options);
+
+        } else if (mode.equals(MathCategoryActivity.MODE_NEXT)) {
+            int start = randomInRange(1, 20);
+            int step = randomInRange(2, 10);
+            int n1 = start;
+            int n2 = start + step;
+            int n3 = start + (2 * step);
+            int n4 = start + (3 * step);
+            correctAnswer = start + (4 * step);
+            questionText = "What is the next number?\n" + n1 + ", " + n2 + ", " + n3 + ", " + n4 + ", ?";
+            options = buildOptions(correctAnswer, '+');
+
+        } else if (mode.equals(MathCategoryActivity.MODE_BODMAS)) {
+            int minBodmas = (questionNumber <= 3) ? 2 : (questionNumber <= 7 ? 5 : 10);
+            int maxBodmas = (questionNumber <= 3) ? 12 : (questionNumber <= 7 ? 25 : 60);
+            int pattern = random.nextInt(4);
+            String expr;
+            int a, b, c, d, e;
+
+            if (pattern == 0) {
+                a = randomInRange(minBodmas, maxBodmas);
+                b = randomInRange(2, 12);
+                c = randomInRange(2, 12);
+                d = randomInRange(minBodmas, maxBodmas);
+                correctAnswer = a + (b * c) - d;
+                expr = a + " + " + b + " × " + c + " − " + d;
+            } else if (pattern == 1) {
+                a = randomInRange(minBodmas, maxBodmas);
+                b = randomInRange(minBodmas, maxBodmas);
+                c = randomInRange(2, 12);
+                correctAnswer = (a + b) * c;
+                expr = "(" + a + " + " + b + ") × " + c;
+            } else if (pattern == 2) {
+                a = randomInRange(2, 15);
+                b = randomInRange(2, 15);
+                d = randomInRange(2, 12);
+                int q = randomInRange(2, 12);
+                c = d * q;
+                correctAnswer = (a * b) + (c / d);
+                expr = "(" + a + " × " + b + ") + (" + c + " ÷ " + d + ")";
+            } else {
+                a = randomInRange(minBodmas, maxBodmas);
+                b = randomInRange(minBodmas, maxBodmas);
+                c = randomInRange(2, 10);
+                d = randomInRange(2, 20);
+                e = randomInRange(2, 10);
+                correctAnswer = (a + b) * c - (d * e);
+                expr = "(" + a + " + " + b + ") × " + c + " − (" + d + " × " + e + ")";
+            }
+            questionText = "Solve (BODMAS):\n" + expr + " = ?";
+            options = buildOptions(correctAnswer, '+');
+
+        } else {
+            // Operator-based question (ADD/SUB/MUL/DIV)
+            char op = getOperatorFromMode();
+            int a, b;
+            String symbol;
+
+            if (op == '/') {
+                int divMax = (questionNumber <= 3) ? 12 : (questionNumber <= 7 ? 20 : 30);
+                b = randomInRange(2, divMax);
+                int res = randomInRange(2, divMax);
+                a = b * res;
+                correctAnswer = a / b;
+                symbol = "÷";
+            } else if (op == '-') {
+                a = randomInRange(min, max);
+                b = randomInRange(min, a);
+                correctAnswer = a - b;
+                symbol = "−";
+            } else if (op == '*') {
+                int mulMax = (questionNumber <= 3) ? 12 : (questionNumber <= 7 ? 20 : 30);
+                a = randomInRange(2, mulMax);
+                b = randomInRange(2, mulMax);
+                correctAnswer = a * b;
+                symbol = "×";
+            } else {
+                a = randomInRange(min, max);
+                b = randomInRange(min, max);
+                correctAnswer = a + b;
+                symbol = "+";
             }
 
-            @Override
-            public void onFinish() {
-                tvTimer.setText("Time: 0s");
-                timeUp();
-            }
-        }.start();
-    }
-
-    private void timeUp() {
-        answered = true;
-        btnNext.setEnabled(true);
-        btnSubmit.setEnabled(false);
-        setOptionsEnabled(false);
-
-        tvResult.setText("⏰ Time’s up! Correct: " + correctAnswer);
-    }
-
-    private void finishQuiz() {
-        stopTimer();
-
-        Intent i = new Intent(this, QuizResultActivity.class);
-        i.putExtra(QuizResultActivity.EXTRA_SCORE, score);
-        i.putExtra(QuizResultActivity.EXTRA_TOTAL, totalQ);
-        startActivity(i);
-        finish();
-    }
-
-
-    private void stopTimer() {
-        if (timer != null) {
-            timer.cancel();
-            timer = null;
+            questionText = a + " " + symbol + " " + b + " = ?";
+            options = buildOptions(correctAnswer, op);
         }
-    }
 
-    private void setOptionsEnabled(boolean enabled) {
-        for (int i = 0; i < rgOptions.getChildCount(); i++) {
-            rgOptions.getChildAt(i).setEnabled(enabled);
-        }
+        // Find which option index has the correct answer
+        int correctIndex = options.indexOf(correctAnswer) + 1;
+
+        return new Question(questionText,
+                String.valueOf(options.get(0)),
+                String.valueOf(options.get(1)),
+                String.valueOf(options.get(2)),
+                String.valueOf(options.get(3)),
+                correctIndex);
     }
 
     private ArrayList<Integer> buildOptions(int correct, char op) {
@@ -393,7 +264,7 @@ public class MathQuizActivity extends AppCompatActivity {
 
         while (options.size() < 4) {
             int wrong = generateWrongAnswer(correct, op);
-            if (!used.contains(wrong)) {
+            if (!used.contains(wrong) && wrong > 0) {
                 used.add(wrong);
                 options.add(wrong);
             }
@@ -401,6 +272,14 @@ public class MathQuizActivity extends AppCompatActivity {
 
         Collections.shuffle(options);
         return options;
+    }
+
+    private int generateWrongAnswer(int correct, char op) {
+        int delta = (op == '*') ? randomInRange(1, 10) : randomInRange(1, 15);
+        int sign = random.nextBoolean() ? 1 : -1;
+        int wrong = correct + (sign * delta);
+        if (wrong < 0) wrong = correct + delta;
+        return wrong;
     }
 
     private char getOperatorFromMode() {
@@ -413,22 +292,169 @@ public class MathQuizActivity extends AppCompatActivity {
         }
     }
 
-
     private int randomInRange(int min, int max) {
         return min + random.nextInt((max - min) + 1);
     }
 
-    private int generateWrongAnswer(int correct, char op) {
-        int delta = (op == '*') ? randomInRange(1, 10) : randomInRange(1, 15);
-        int sign = random.nextBoolean() ? 1 : -1;
-        int wrong = correct + (sign * delta);
-        if (wrong < 0) wrong = correct + delta;
-        return wrong;
+    private void displayQuestion() {
+        if (currentQuestionIndex >= questionList.size()) {
+            finishQuiz();
+            return;
+        }
+
+        isAnswered = false;
+        Question currentQuestion = questionList.get(currentQuestionIndex);
+        
+        tvQuestion.setText(currentQuestion.getQuestion());
+        tvAnswer1.setText(currentQuestion.getOption1());
+        tvAnswer2.setText(currentQuestion.getOption2());
+        tvAnswer3.setText(currentQuestion.getOption3());
+        tvAnswer4.setText(currentQuestion.getOption4());
+
+        // Reset answer card colors
+        resetAnswerCards();
+        
+        // Enable answer cards
+        enableAnswerCards();
+        
+        // Update score display
+        updateScore();
+    }
+
+    private void resetAnswerCards() {
+        cardAnswer1.setCardBackgroundColor(getResources().getColor(R.color.bright_purple_button, null));
+        cardAnswer2.setCardBackgroundColor(getResources().getColor(R.color.bright_purple_button, null));
+        cardAnswer3.setCardBackgroundColor(getResources().getColor(R.color.bright_purple_button, null));
+        cardAnswer4.setCardBackgroundColor(getResources().getColor(R.color.bright_purple_button, null));
+    }
+
+    private void onAnswerClick(int selectedAnswer) {
+        if (isAnswered) {
+            return;
+        }
+
+        isAnswered = true;
+        Question currentQuestion = questionList.get(currentQuestionIndex);
+        int correctAnswer = currentQuestion.getCorrectAnswer();
+
+        // Highlight the selected answer
+        CardView selectedCard = getAnswerCard(selectedAnswer);
+        CardView correctCard = getAnswerCard(correctAnswer);
+
+        if (selectedAnswer == correctAnswer) {
+            // Correct answer - show green
+            selectedCard.setCardBackgroundColor(getResources().getColor(R.color.tile_history, null));
+            score++;
+            updateScore();
+        } else {
+            // Wrong answer - show red for selected, green for correct
+            selectedCard.setCardBackgroundColor(getResources().getColor(R.color.wrong_answer, null));
+            correctCard.setCardBackgroundColor(getResources().getColor(R.color.tile_history, null));
+        }
+
+        // Disable all answer cards
+        disableAnswerCards();
+
+        // Move to next question after a short delay
+        new android.os.Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                currentQuestionIndex++;
+                if (timer != null) {
+                    timer.cancel();
+                }
+                timeLeft = 60;
+                tvTimeLeft.setText("Time: 60s");
+                displayQuestion();
+                startTimer();
+            }
+        }, 2000); // 2 second delay
+    }
+
+    private CardView getAnswerCard(int answerNumber) {
+        switch (answerNumber) {
+            case 1: return cardAnswer1;
+            case 2: return cardAnswer2;
+            case 3: return cardAnswer3;
+            case 4: return cardAnswer4;
+            default: return cardAnswer1;
+        }
+    }
+
+    private void disableAnswerCards() {
+        cardAnswer1.setClickable(false);
+        cardAnswer2.setClickable(false);
+        cardAnswer3.setClickable(false);
+        cardAnswer4.setClickable(false);
+    }
+
+    private void enableAnswerCards() {
+        cardAnswer1.setClickable(true);
+        cardAnswer2.setClickable(true);
+        cardAnswer3.setClickable(true);
+        cardAnswer4.setClickable(true);
+    }
+
+    private void updateScore() {
+        tvScore.setText("Score: " + score);
+    }
+
+    private void startTimer() {
+        if (timer != null) {
+            timer.cancel();
+        }
+
+        timer = new CountDownTimer(timeLeft * 1000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timeLeft = (int) (millisUntilFinished / 1000);
+                tvTimeLeft.setText("Time: " + timeLeft + "s");
+            }
+
+            @Override
+            public void onFinish() {
+                timeLeft = 0;
+                tvTimeLeft.setText("Time: 0s");
+                // Auto move to next question if time runs out
+                if (!isAnswered) {
+                    isAnswered = true;
+                    Question currentQuestion = questionList.get(currentQuestionIndex);
+                    CardView correctCard = getAnswerCard(currentQuestion.getCorrectAnswer());
+                    correctCard.setCardBackgroundColor(getResources().getColor(R.color.tile_history, null));
+                    disableAnswerCards();
+                    
+                    new android.os.Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            currentQuestionIndex++;
+                            timeLeft = 60;
+                            tvTimeLeft.setText("Time: 60s");
+                            displayQuestion();
+                            startTimer();
+                        }
+                    }, 2000);
+                }
+            }
+        }.start();
+    }
+
+    private void finishQuiz() {
+        if (timer != null) {
+            timer.cancel();
+        }
+        // Navigate to result screen
+        Intent intent = new Intent(MathQuizActivity.this, QuizResultActivity.class);
+        intent.putExtra("score", score);
+        intent.putExtra("totalQuestions", questionList.size());
+        startActivity(intent);
+        finish();
     }
 
     @Override
     protected void onDestroy() {
-        stopTimer();
         super.onDestroy();
+        if (timer != null) {
+            timer.cancel();
+        }
     }
 }

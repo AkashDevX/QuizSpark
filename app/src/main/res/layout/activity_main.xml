@@ -16,8 +16,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:contentDescription="@string/loading_bg"
-            android:src="@mipmap/ic_launcher" />
+            android:contentDescription="@string/loading_bg"/>
 
         <ProgressBar
             android:id="@+id/progressBar"

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- Circle background -->
+    <path
+        android:fillColor="@color/icon_bg_blue"
+        android:pathData="M 12,2 A 10,10 0 1,1 2,12 A 10,10 0 1,1 12,2 Z"/>
+    <!-- Play triangle -->
+    <path
+        android:fillColor="@color/white"
+        android:pathData="M 9,7 L 9,17 L 17,12 Z"/>
+</vector>
+

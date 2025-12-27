@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="120dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    
+    <!-- Lightbulb glass/base -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M12,2C8.13,2 5,5.13 5,9c0,2.38 1.19,4.47 3,5.74V17c0,0.55 0.45,1 1,1h6c0.55,0 1,-0.45 1,-1v-2.26c1.81,-1.27 3,-3.36 3,-5.74C19,5.13 15.87,2 12,2z"/>
+    
+    <!-- Base connector -->
+    <path
+        android:fillColor="#CCCCCC"
+        android:pathData="M13,16h-2v-1h2V16z"/>
+    
+    <!-- Swirling colorful filament - Pink -->
+    <path
+        android:fillColor="#FF69B4"
+        android:pathData="M12,9.5C11.5,9.5 11,9.7 10.6,10L11.4,10.8C11.6,10.6 11.8,10.5 12,10.5C12.2,10.5 12.4,10.6 12.6,10.8L13.4,10C13,9.7 12.5,9.5 12,9.5z"/>
+    
+    <!-- Swirling colorful filament - Orange -->
+    <path
+        android:fillColor="#FFA500"
+        android:pathData="M10.5,10.5C10.2,10.2 9.8,10 9.5,10.5C9.5,10.8 9.7,11.2 10,11.5C10.3,11.2 10.5,10.8 10.5,10.5z"/>
+    
+    <!-- Swirling colorful filament - Yellow -->
+    <path
+        android:fillColor="#FFD700"
+        android:pathData="M13.5,10.5C13.8,10.2 14.2,10 14.5,10.5C14.5,10.8 14.3,11.2 14,11.5C13.7,11.2 13.5,10.8 13.5,10.5z"/>
+    
+    <!-- Swirling colorful filament - Green -->
+    <path
+        android:fillColor="#32CD32"
+        android:pathData="M12,8.5C11.7,8.2 11.3,8 11,8.5C11,8.8 11.2,9.2 11.5,9.5C11.8,9.2 12,8.8 12,8.5z"/>
+    
+    <!-- Swirling colorful filament - Blue -->
+    <path
+        android:fillColor="#4169E1"
+        android:pathData="M12,11.5C12.3,11.2 12.7,11 13,11.5C13,11.8 12.8,12.2 12.5,12.5C12.2,12.2 12,11.8 12,11.5z"/>
+    
+    <!-- Central colorful swirl -->
+    <path
+        android:fillColor="#FF69B4"
+        android:pathData="M 10.5,10 A 1.5,1.5 0 1,1 13.5,10 A 1.5,1.5 0 1,1 10.5,10 Z"/>
+    <path
+        android:fillColor="#FFA500"
+        android:pathData="M 9.5,10.5 A 1,1 0 1,1 11.5,10.5 A 1,1 0 1,1 9.5,10.5 Z"/>
+    <path
+        android:fillColor="#FFD700"
+        android:pathData="M 12.5,10.5 A 1,1 0 1,1 14.5,10.5 A 1,1 0 1,1 12.5,10.5 Z"/>
+    <path
+        android:fillColor="#32CD32"
+        android:pathData="M 11,8.5 A 1,1 0 1,1 13,8.5 A 1,1 0 1,1 11,8.5 Z"/>
+    <path
+        android:fillColor="#4169E1"
+        android:pathData="M 11,11.5 A 1,1 0 1,1 13,11.5 A 1,1 0 1,1 11,11.5 Z"/>
+</vector>

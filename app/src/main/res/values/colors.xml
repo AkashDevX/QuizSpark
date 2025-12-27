@@ -3,11 +3,18 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     
+    <!-- Dark Purple Theme Colors (Quizzles Theme) -->
+    <color name="dark_purple_background">#2D1B4E</color>
+    <color name="dark_purple_pattern">#3D2B5E</color>
+    <color name="bright_purple_button">#9C27B0</color>
+    <color name="darker_purple_button">#6A1B9A</color>
+    <color name="teal_green_accent">#26A69A</color>
+    
     <!-- Blue Theme Colors -->
     <color name="primary_blue">#2196F3</color>
     <color name="primary_blue_dark">#1976D2</color>
     <color name="primary_blue_light">#64B5F6</color>
-    <color name="background_blue">#E3F2FD</color>
+    <color name="background_blue">#2D1B4E</color>
     <color name="background_blue_dark">#BBDEFB</color>
     
     <!-- Tile Colors -->
@@ -20,4 +27,18 @@
     <!-- Text Colors -->
     <color name="text_primary">#FFFFFF</color>
     <color name="text_secondary">#212121</color>
+    <color name="text_grey">#B0B0B0</color>
+    
+    <!-- Gradient Colors for Category Cards -->
+    <color name="gradient_pink">#FF6B9D</color>
+    <color name="gradient_orange">#FFA500</color>
+    <color name="gradient_blue_dark">#4A90E2</color>
+    <color name="gradient_blue_light">#87CEEB</color>
+    <color name="gradient_purple_dark">#9B59B6</color>
+    <color name="gradient_purple_light">#E6D3F5</color>
+    
+    <!-- Status Icon Backgrounds -->
+    <color name="icon_bg_pink">#FFB6C1</color>
+    <color name="icon_bg_blue">#ADD8E6</color>
+    <color name="icon_bg_purple">#DDA0DD</color>
 </resources>

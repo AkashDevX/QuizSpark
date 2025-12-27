@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_purple_background"
+    tools:context=".SplashActivity">
+
+    <!-- Background Pattern -->
+    <View
+        android:id="@+id/backgroundPattern"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background_pattern"
+        android:alpha="0.1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Central Quiz Icon Container -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardQuizIcon"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:cardCornerRadius="100dp"
+        app:cardElevation="12dp"
+        app:cardBackgroundColor="@color/bright_purple_button"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="100dp">
+
+        <ImageView
+            android:id="@+id/ivQuizIcon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_lightbulb"
+            android:scaleType="centerInside"
+            android:padding="30dp"
+            android:contentDescription="@string/quiz_icon" />
+    </androidx.cardview.widget.CardView>
+
+    <!-- App Name -->
+    <TextView
+        android:id="@+id/tvAppName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Quizzles"
+        android:textColor="@color/teal_green_accent"
+        android:textSize="48sp"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif-medium"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@id/cardQuizIcon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Tagline -->
+    <TextView
+        android:id="@+id/tvTagline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Test Your Knowledge"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:alpha="0.8"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/tvAppName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Quiz Icons Floating Around -->
+    <!-- Question Mark Icon -->
+    <ImageView
+        android:id="@+id/ivQuestion1"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/ic_quiz_question"
+        android:alpha="0.6"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="100dp"
+        android:layout_marginStart="40dp" />
+
+    <!-- Pencil Icon -->
+    <ImageView
+        android:id="@+id/ivPencil"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_quiz_pencil"
+        android:alpha="0.6"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="120dp"
+        android:layout_marginEnd="50dp" />
+
+    <!-- Trophy Icon -->
+    <ImageView
+        android:id="@+id/ivTrophy"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:src="@drawable/ic_quiz_trophy"
+        android:alpha="0.6"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="150dp"
+        android:layout_marginStart="60dp" />
+
+    <!-- Star Icon -->
+    <ImageView
+        android:id="@+id/ivStar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_quiz_star"
+        android:alpha="0.6"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="120dp"
+        android:layout_marginEnd="40dp" />
+
+    <!-- Loading Indicator -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="@color/teal_green_accent"
+        android:layout_marginTop="32dp"
+        app:layout_constraintTop_toBottomOf="@id/tvTagline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

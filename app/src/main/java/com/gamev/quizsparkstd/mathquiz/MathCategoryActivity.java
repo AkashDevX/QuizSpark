@@ -1,9 +1,15 @@
 package com.gamev.quizsparkstd.mathquiz;
+
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
+import android.view.View;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.gamev.quizsparkstd.R;
 
@@ -19,18 +25,41 @@ public class MathCategoryActivity extends AppCompatActivity {
     public static final String MODE_NEXT = "NEXT";
     public static final String MODE_BODMAS = "BODMAS";
 
+    private CardView cardAdd, cardSub, cardMul, cardDiv, cardBiggest, cardNext, cardBodmas;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_math_category);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
 
-        findViewById(R.id.btnAdd).setOnClickListener(v -> openQuiz(MODE_ADD));
-        findViewById(R.id.btnSub).setOnClickListener(v -> openQuiz(MODE_SUB));
-        findViewById(R.id.btnMul).setOnClickListener(v -> openQuiz(MODE_MUL));
-        findViewById(R.id.btnDiv).setOnClickListener(v -> openQuiz(MODE_DIV));
-        findViewById(R.id.btnBiggest).setOnClickListener(v -> openQuiz(MODE_BIGGEST));
-        findViewById(R.id.btnNextNumber).setOnClickListener(v -> openQuiz(MODE_NEXT));
-        findViewById(R.id.btnBodmas).setOnClickListener(v -> openQuiz(MODE_BODMAS));
+        initializeViews();
+        setClickListeners();
+    }
+
+    private void initializeViews() {
+        cardAdd = findViewById(R.id.cardAdd);
+        cardSub = findViewById(R.id.cardSub);
+        cardMul = findViewById(R.id.cardMul);
+        cardDiv = findViewById(R.id.cardDiv);
+        cardBiggest = findViewById(R.id.cardBiggest);
+        cardNext = findViewById(R.id.cardNext);
+        cardBodmas = findViewById(R.id.cardBodmas);
+    }
+
+    private void setClickListeners() {
+        cardAdd.setOnClickListener(v -> openQuiz(MODE_ADD));
+        cardSub.setOnClickListener(v -> openQuiz(MODE_SUB));
+        cardMul.setOnClickListener(v -> openQuiz(MODE_MUL));
+        cardDiv.setOnClickListener(v -> openQuiz(MODE_DIV));
+        cardBiggest.setOnClickListener(v -> openQuiz(MODE_BIGGEST));
+        cardNext.setOnClickListener(v -> openQuiz(MODE_NEXT));
+        cardBodmas.setOnClickListener(v -> openQuiz(MODE_BODMAS));
     }
 
     private void openQuiz(String mode) {

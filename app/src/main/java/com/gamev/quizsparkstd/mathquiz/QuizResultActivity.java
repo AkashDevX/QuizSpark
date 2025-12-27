@@ -29,8 +29,8 @@ public class QuizResultActivity extends AppCompatActivity {
 
         Button btnMainMenu = findViewById(R.id.cardBackButton);
         btnMainMenu.setOnClickListener(v -> {
-            // If your main screen is MainActivity:
-            Intent i = new Intent(QuizResultActivity.this, MainActivity.class);
+            // Navigate to MainScreenActivity
+            Intent i = new Intent(QuizResultActivity.this, com.gamev.quizsparkstd.MainScreen.MainScreenActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(i);
             finish();

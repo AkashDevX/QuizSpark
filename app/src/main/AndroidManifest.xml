@@ -22,7 +22,14 @@
             android:exported="false" />
         <activity
             android:name=".MainScreen.MainScreenActivity"
-            android:exported="true">
+            android:exported="false" />
+        <activity
+            android:name=".WelcomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SplashActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -39,12 +46,7 @@
         <activity android:name=".mathquiz.MathQuizActivity">
         </activity>
         <activity android:name=".mathquiz.MathCategoryActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="false" />
         <activity android:name=".mathquiz.QuizResultActivity" />
 
     </application>

@@ -4,174 +4,259 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_blue"
+    android:background="@drawable/background_pattern"
     android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
+        android:padding="20dp"
+        android:layout_marginTop="50dp"
         tools:context=".MainScreen.MainScreenActivity">
 
-        <!-- App Name Header -->
+        <!-- Header: Let's Play -->
         <TextView
-            android:id="@+id/tvAppName"
+            android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Quiz App"
-            android:textColor="@color/primary_blue_dark"
-            android:textSize="42sp"
+            android:layout_marginTop="16dp"
+            android:text="Let's Play"
+            android:textColor="#FF6B9D"
+            android:textSize="32sp"
             android:textStyle="bold"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="32dp"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_margin="10dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- History Quiz Tile -->
+        <!-- Subtitle: Be the first! -->
+        <TextView
+            android:id="@+id/tvSubtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_margin="10dp"
+            android:paddingBottom="50dp"
+            android:text="Be the first!"
+            android:textColor="@color/text_grey"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+        <!-- Level 1 Card: History Quiz (Completed) -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardHistory"
             android:layout_width="0dp"
-            android:layout_height="180dp"
-            android:layout_margin="12dp"
+            android:layout_height="140dp"
+            android:layout_marginTop="24dp"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground"
             app:cardCornerRadius="20dp"
-            app:cardElevation="12dp"
-            android:layout_marginEnd="10dp"
-            app:cardBackgroundColor="@color/tile_history"
-            app:layout_constraintTop_toBottomOf="@id/tvAppName"
+            app:cardElevation="4dp"
+            android:layout_margin="10dp"
+            app:cardBackgroundColor="@android:color/transparent"
+            app:layout_constraintTop_toBottomOf="@id/tvSubtitle"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/cardMaths"
-            app:layout_constraintWidth_percent="0.48">
+            app:layout_constraintEnd_toEndOf="parent">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:padding="20dp">
+                android:background="@drawable/gradient_pink_orange"
+                android:padding="16dp">
 
+                <!-- Status Icon: Checkmark -->
+                <ImageView
+                    android:id="@+id/ivHistoryStatus"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/ic_checkmark_circle"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+                <!-- Level Number -->
                 <TextView
+                    android:id="@+id/tvHistoryLevel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="level 1"
+                    android:textColor="@color/text_grey"
+                    android:textSize="12sp"
+                    android:layout_marginStart="16dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/ivHistoryStatus" />
+
+                <!-- Category Name -->
+                <TextView
+                    android:id="@+id/tvHistoryName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="History Quiz"
-                    android:textColor="@color/text_primary"
-                    android:textSize="22sp"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
                     android:textStyle="bold"
-                    android:gravity="center" />
-            </LinearLayout>
+                    android:layout_marginTop="4dp"
+                    app:layout_constraintTop_toBottomOf="@id/tvHistoryLevel"
+                    app:layout_constraintStart_toStartOf="@id/tvHistoryLevel" />
+
+                <!-- Category Icon -->
+                <ImageView
+                    android:id="@+id/ivHistoryIcon"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/ic_history"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Maths Quiz Tile -->
+        <!-- Level 2 Card: Maths Quiz (Active) -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardMaths"
             android:layout_width="0dp"
-            android:layout_height="180dp"
-            android:layout_margin="12dp"
+            android:layout_height="140dp"
+            android:layout_marginTop="36dp"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground"
-            app:cardBackgroundColor="@color/tile_maths"
+            app:cardBackgroundColor="@android:color/transparent"
             app:cardCornerRadius="20dp"
-            app:cardElevation="12dp"
+            app:cardElevation="4dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/cardHistory"
-            app:layout_constraintTop_toBottomOf="@id/tvAppName"
-            app:layout_constraintWidth_percent="0.48">
+            android:layout_margin="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardHistory">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="20dp">
+                android:background="@drawable/gradient_blue"
+                android:padding="16dp">
 
+                <!-- Status Icon: Play -->
+                <ImageView
+                    android:id="@+id/ivMathsStatus"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/ic_play_circle"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <!-- Level Number -->
                 <TextView
+                    android:id="@+id/tvMathsLevel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:layout_marginStart="16dp"
+                    android:text="level 2"
+                    android:textColor="@color/text_grey"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toEndOf="@id/ivMathsStatus"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <!-- Category Name -->
+                <TextView
+                    android:id="@+id/tvMathsName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
                     android:text="Maths Quiz"
-                    android:textColor="@color/text_primary"
-                    android:textSize="22sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@id/tvMathsLevel"
+                    app:layout_constraintTop_toBottomOf="@id/tvMathsLevel" />
+
+                <!-- Category Icon -->
+                <ImageView
+                    android:id="@+id/ivMathsIcon"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/ic_math"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Celebrity Quiz Tile -->
+        <!-- Level 3 Card: Celebrity Quiz (Locked) -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardCelebrity"
             android:layout_width="0dp"
-            android:layout_height="180dp"
-            android:layout_margin="12dp"
+            android:layout_height="140dp"
+            android:layout_marginTop="36dp"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground"
+            app:cardBackgroundColor="@android:color/transparent"
             app:cardCornerRadius="20dp"
-            app:cardElevation="12dp"
-            app:cardBackgroundColor="@color/tile_celebrity"
-            app:layout_constraintTop_toBottomOf="@id/cardHistory"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/cardAbout"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintWidth_percent="0.48"
-            android:layout_marginBottom="24dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:padding="20dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Celebrity Quiz"
-                    android:textColor="@color/text_primary"
-                    android:textSize="22sp"
-                    android:textStyle="bold"
-                    android:gravity="center" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <!-- About Us Tile -->
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardAbout"
-            android:layout_width="0dp"
-            android:layout_height="180dp"
-            android:layout_margin="12dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackground"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="12dp"
-            app:cardBackgroundColor="@color/tile_about"
-            app:layout_constraintTop_toBottomOf="@id/cardMaths"
-            app:layout_constraintStart_toEndOf="@id/cardCelebrity"
+            app:cardElevation="4dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintWidth_percent="0.48"
-            android:layout_marginBottom="24dp">
+            android:layout_margin="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardMaths">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:padding="20dp">
+                android:background="@drawable/gradient_purple"
+                android:padding="16dp">
 
+                <!-- Status Icon: Lock -->
+                <ImageView
+                    android:id="@+id/ivCelebrityStatus"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/ic_lock_circle"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <!-- Level Number -->
                 <TextView
+                    android:id="@+id/tvCelebrityLevel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="About Us"
-                    android:textColor="@color/text_primary"
-                    android:textSize="22sp"
+                    android:layout_marginStart="16dp"
+                    android:text="level 3"
+                    android:textColor="@color/text_grey"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toEndOf="@id/ivCelebrityStatus"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <!-- Category Name -->
+                <TextView
+                    android:id="@+id/tvCelebrityName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Celebrity Quiz"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
                     android:textStyle="bold"
-                    android:gravity="center" />
-            </LinearLayout>
+                    app:layout_constraintStart_toStartOf="@id/tvCelebrityLevel"
+                    app:layout_constraintTop_toBottomOf="@id/tvCelebrityLevel" />
+
+                <!-- Category Icon -->
+                <ImageView
+                    android:id="@+id/ivCelebrityIcon"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/ic_celebrity"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

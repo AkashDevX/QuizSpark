@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="80dp"
+    android:height="80dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- Trophy base -->
+    <path
+        android:fillColor="@color/white"
+        android:pathData="M 8,18 L 8,20 L 10,20 L 10,18 L 8,18 Z M 14,18 L 14,20 L 16,20 L 16,18 L 14,18 Z"/>
+    <!-- Trophy cup body -->
+    <path
+        android:fillColor="@color/white"
+        android:pathData="M 7,8 L 7,18 L 17,18 L 17,8 L 15,8 L 15,16 L 9,16 L 9,8 Z"/>
+    <!-- Trophy handles -->
+    <path
+        android:fillColor="@color/white"
+        android:pathData="M 5,10 C 5,10 5,12 7,12 L 7,10 Z"/>
+    <path
+        android:fillColor="@color/white"
+        android:pathData="M 19,10 C 19,10 19,12 17,12 L 17,10 Z"/>
+    <!-- Trophy top rim -->
+    <path
+        android:fillColor="#FFD700"
+        android:pathData="M 6,8 L 18,8 L 18,9 L 6,9 Z"/>
+    <!-- Star on trophy -->
+    <path
+        android:fillColor="#FFD700"
+        android:pathData="M 12,10 L 13,12.5 L 15.5,12.5 L 13.5,14 L 14.5,16.5 L 12,15 L 9.5,16.5 L 10.5,14 L 8.5,12.5 L 11,12.5 Z"/>
+    <!-- Small decorative stars -->
+    <path
+        android:fillColor="#FFD700"
+        android:pathData="M 9,11 L 9.3,11.5 L 9.8,11.5 L 9.5,12 L 9.6,12.5 L 9,12.2 L 8.4,12.5 L 8.5,12 L 8.2,11.5 L 8.7,11.5 Z"/>
+    <path
+        android:fillColor="#FFD700"
+        android:pathData="M 15,11 L 15.3,11.5 L 15.8,11.5 L 15.5,12 L 15.6,12.5 L 15,12.2 L 14.4,12.5 L 14.5,12 L 14.2,11.5 L 14.7,11.5 Z"/>
+</vector>
