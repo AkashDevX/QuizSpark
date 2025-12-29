@@ -17,6 +17,7 @@
             android:id="@+id/tvAboutTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
             android:text="About Quiz Spark"
             android:textColor="@android:color/white"
             android:textSize="28sp"

@@ -12,7 +12,9 @@
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="18dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingTop="18dp"
         tools:context=".MainScreen.MainScreenActivity">
 
         <!-- Top row: menu + profile (optional) -->
@@ -41,6 +43,7 @@
             android:id="@+id/tvAppName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
             android:layout_marginTop="18dp"
             android:text="QuizSpark"
             android:fontFamily="@font/poppins_bold"
@@ -57,6 +60,7 @@
             android:id="@+id/tvSub"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
             android:layout_marginTop="6dp"
             android:text="Pick a quiz category to begin."
             android:fontFamily="@font/poppins_regular"
